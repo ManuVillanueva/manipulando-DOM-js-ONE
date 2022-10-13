@@ -6,7 +6,25 @@ const btn = document.querySelector("[data-form-btn]");
 const createTask = (evento) => {
     evento.preventDefault();
     const input = document.querySelector("[data-form-input]");
-    console.log(input.value);
+    // creo una nueva variable para almacenar el valor del input
+    const value = input.value; 
+    const list = document.querySelector("[data-list]");
+    const task = document.createElement("li");
+    task.classList.add("card");
+    // y con esto le digo que una vez que se almacene en value el input, este se borre
+    input.value = "";
+    //Template strings
+    const content = `<div>
+        <i class="far fa-check-square icon"></i>
+        <span class="task">${value}</span>
+        </div>
+        <i class="fas fa-trash-alt trashIcon icon"></i>`;
+    //Con esto reemplazamos mostramos el valor de task en el content, o sea que se muestra en el html en la etiqueta span del li
+    task.innerHTML = content;
+
+    list.appendChild(task);
+
+    console.log(content);
 }
 
 
