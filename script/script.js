@@ -1,3 +1,6 @@
+// Immediately invoked function expression IIFE
+
+( () => {
 // creamos una variable para capturar el elemento botón mediante un data atributes
 const btn = document.querySelector("[data-form-btn]");
 
@@ -13,24 +16,42 @@ const createTask = (evento) => {
     task.classList.add("card");
     // y con esto le digo que una vez que se almacene en value el input, este se borre
     input.value = "";
+
+    // Con estas variables creamos los elementos de html, para poder capturarlo y modificarlo con js
+    const taksContent = document.createElement("div");
+    const tittleTask = document.createElement("span");
+    tittleTask.classList.add("task");
+    tittleTask.innerText = value;
+    taksContent.appendChild(checkComplete());
+    taksContent.appendChild(tittleTask);
     //Template strings
-    const content = `<div>
-        <i class="far fa-check-square icon"></i>
-        <span class="task">${value}</span>
-        </div>
+    const content = `
         <i class="fas fa-trash-alt trashIcon icon"></i>`;
     //Con esto reemplazamos mostramos el valor de task en el content, o sea que se muestra en el html en la etiqueta span del li
-    task.innerHTML = content;
+    // task.innerHTML = content;
+
+    task.appendChild(taksContent);
 
     list.appendChild(task);
-
-    console.log(content);
 }
 
-
-console.log(btn);
-
 btn.addEventListener("click", createTask);
+
+// Creamos esta función, para que podamos desmarcar la tareas de la lista
+const checkComplete = () => {
+    const i = document.createElement("i");
+    i.classList.add("far", "fa-check-square", "icon");
+    i.addEventListener("click", completeTask);
+    return i;
+}
+
+//Función que captura el icono check de la lista, para poder seleccionar y deseleccionar
+const completeTask = (event) => {
+    const element = event.target;
+    element.classList.toggle("fas");
+    element.classList.toggle("completeIcon");
+    element.classList.toggle("far");
+}
 
 
 // listener - o sea con esta función escuchamos el evento del elemento button del html, cuando el usuario hace click
@@ -49,3 +70,5 @@ btn.addEventListener("click", createTask);
 //     const input = document.querySelector("[data-form-input]");
 //     console.log(input.value);
 // })
+
+})();
